@@ -1,0 +1,23 @@
+{
+  "name": "ITOps-docker",
+  "version": "3.1.0",
+  "author": "Red Hat, Inc. - Systems Engineering",
+  "summary": "set up docker on a host",
+  "license": "GPL-3.0",
+  "source": "https://github.com/goern/ITOps-docker-puppet-module",
+  "project_page": "https://github.com/goern/ITOps-docker-puppet-module",
+  "issues_url": "https://github.com/goern/ITOps-docker-puppet-module/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [ "7.0", "7.1" ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [ "7.1" ]
+    }
+  ]
+}
