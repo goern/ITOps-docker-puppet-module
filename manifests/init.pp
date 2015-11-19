@@ -24,16 +24,17 @@
 # === Examples
 #
 #  class { profile_dockerhost:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Ben Krüll <bkruell@redhat.com>
+# Christoph Görn <goern@redhat.com>
 #
 # === Copyright
 #
-# Copyright 2015 Your name here, unless otherwise noted.
+# Copyright 2015 Red Hat, Inc.
 #
 class docker (
 
@@ -41,14 +42,14 @@ class docker (
   $fw_port = '2375',
 
 ) {
- 
+
  notify {"Installing version $version":}
 
  package { 'docker':
 	ensure => $version,
  }
 
- file { '/etc/sysconfig/docker': 
+ file { '/etc/sysconfig/docker':
 	ensure  => file,
 	require => Package['docker'],
 	content => template('docker/docker.erb'),
@@ -58,7 +59,7 @@ class docker (
 	notify 	=> Service['docker'],
  }
 
- file { '/etc/sysconfig/docker-network': 
+ file { '/etc/sysconfig/docker-network':
 	ensure  => file,
 	require => Package['docker'],
 	content => template('docker/docker-network.erb'),
@@ -94,4 +95,12 @@ class docker (
                     ]
  }
 
+ exec {
+   "set up docker storage":
+   path     => "/usr/bin:/usr/sbin:/bin",
+   command  => "echo \"VG=vg_docker\" >/etc/sysconfig/docker-storage-setup",
+   notify   => [
+                Service['docker'],
+              ]
+ }
 }
